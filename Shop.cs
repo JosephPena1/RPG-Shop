@@ -6,31 +6,33 @@ namespace HelloWorld
 {
     class Shop
     {
-        private int gold;
-        private Item[] inventory;
+        private int _gold;
+        private Item[] _inventory;
 
         public Shop()
         {
-            gold = 50;
-            inventory = new Item[3];
+            _gold = 50;
+            _inventory = new Item[3];
         }
 
         public Shop(Item[] items)
         {
-            for (int i = 0; i < items.Length; i++)
-            {
-                inventory[i] = items[i];
-            }
+            _inventory = items;
+            _gold = 50;
         }
 
         public bool Sell(Player player, int shopIndex, int playerIndex)
         {
-            return player.Buy(inventory[shopIndex], playerIndex);
+            return player.Buy(_inventory[shopIndex], playerIndex);
         }
 
-        public void CheckPlayerFunds(Player player)
+        public bool CheckPlayerFunds(Player player)
         {
-            Console.WriteLine();
+            if (player.GetGold() <= 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
