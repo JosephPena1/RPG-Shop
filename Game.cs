@@ -15,10 +15,10 @@ namespace HelloWorld
     {
         private Player _player = new Player();
         private Shop _shop = new Shop();
-        private Item arrow;
-        private Item shield;
-        private Item gem;
-        private Item[] shopInventory = new Item[3];
+        private Item _arrow;
+        private Item _shield;
+        private Item _gem;
+        private Item[] _shopInventory = new Item[3];
         private bool _gameOver = false;
 
         //Run the game
@@ -37,6 +37,7 @@ namespace HelloWorld
         //Performed once when the game begins
         public void Start()
         {
+            Console.WriteLine("Welcome to my shop!");
             InitItems();
         }
 
@@ -55,33 +56,32 @@ namespace HelloWorld
         //Initializes items
         private void InitItems()
         {
-            arrow.cost = 10;
-            arrow.name = "Arrow";
+            _arrow.cost = 10;
+            _arrow.name = "Arrow";
 
-            shield.cost = 20;
-            shield.name = "Shield";
+            _shield.cost = 20;
+            _shield.name = "Shield";
 
-            gem.cost = 30;
-            gem.name = "Gem";
+            _gem.cost = 30;
+            _gem.name = "Gem";
 
-            shopInventory[0] = arrow;
-            shopInventory[1] = shield;
-            shopInventory[2] = gem;
-            _shop = new Shop(shopInventory);
+            _shopInventory[0] = _arrow;
+            _shopInventory[1] = _shield;
+            _shopInventory[2] = _gem;
+            _shop = new Shop(_shopInventory);
         }
 
         private void OpenShopMenu()
         {
-
-            Console.WriteLine("Welcome to my shop! \nWhat would you like to buy?");
+            Console.WriteLine("What would you like to buy?");
             Console.WriteLine("\nGold: " + _player.GetGold());
-            PrintInventory(shopInventory);
+            PrintInventory(_shopInventory);
 
             //stores what item the player wants.
             Console.Write("> ");
             char itemChoice = Console.ReadKey().KeyChar;
-            int itemIndex = 0;
-            switch(itemChoice)
+            int itemIndex = -1;
+            switch (itemChoice)
             {
                 case '1':
                     itemIndex = 0;
@@ -93,7 +93,7 @@ namespace HelloWorld
                     itemIndex = 2;
                     break;
             }
-            
+
             if (_shop.CheckPlayerFunds(_player) == false)
             {
                 Console.WriteLine("\nyou don't have any gold left");
@@ -102,21 +102,23 @@ namespace HelloWorld
             }
 
             //stores which slot the player wants the item in.
-            Console.WriteLine("");
-            PrintInventory(_player.GetInventory());
-
+            Console.Clear();
+            //Console.WriteLine("");
             Console.WriteLine("Which slot would you like to replace?");
+            PrintInventory(_player.GetInventory());
             Console.Write("> ");
             char slotChoice = Console.ReadKey().KeyChar;
-            int slotIndex = 0;
+            int slotIndex = -1;
             switch (slotChoice)
             {
                 case '1':
                     slotIndex = 0;
                     break;
+
                 case '2':
                     slotIndex = 1;
                     break;
+
                 case '3':
                     slotIndex = 2;
                     break;
@@ -129,11 +131,11 @@ namespace HelloWorld
         }
 
         //prints a given inventory
-        public void PrintInventory(Item[] items)
+        public void PrintInventory(Item[] inventory)
         {
-            for (int i = 0; i < items.Length; i++)
+            for (int i = 0; i < inventory.Length; i++)
             {
-                Console.WriteLine((i + 1) + ". " + items[i].name);
+                Console.WriteLine((i + 1) + ". " + inventory[i].name);
             }
         }
 

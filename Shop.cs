@@ -17,13 +17,19 @@ namespace HelloWorld
 
         public Shop(Item[] items)
         {
-            _inventory = items;
             _gold = 50;
+            _inventory = items;
         }
 
         public bool Sell(Player player, int shopIndex, int playerIndex)
         {
-            return player.Buy(_inventory[shopIndex], playerIndex);
+            Item itemToBuy = _inventory[shopIndex];
+            if (player.Buy(itemToBuy, playerIndex))
+            {
+                _gold += itemToBuy.cost;
+                return true;
+            }
+            return false;
         }
 
         public bool CheckPlayerFunds(Player player)
