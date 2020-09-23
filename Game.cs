@@ -78,6 +78,7 @@ namespace HelloWorld
             PrintInventory(shopInventory);
 
             //stores what item the player wants.
+            Console.Write("> ");
             char itemChoice = Console.ReadKey().KeyChar;
             int itemIndex = 0;
             switch(itemChoice)
@@ -105,7 +106,7 @@ namespace HelloWorld
             PrintInventory(_player.GetInventory());
 
             Console.WriteLine("Which slot would you like to replace?");
-
+            Console.Write("> ");
             char slotChoice = Console.ReadKey().KeyChar;
             int slotIndex = 0;
             switch (slotChoice)
@@ -122,6 +123,7 @@ namespace HelloWorld
             }
 
             _shop.Sell(_player, itemIndex, slotIndex);
+            Console.WriteLine();
             Console.Clear();
 
         }
